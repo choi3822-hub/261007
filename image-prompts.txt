@@ -1,0 +1,84 @@
+ABC라이프케어 랜딩 페이지 — 이미지 생성 프롬프트
+==================================================
+· 각 [ ] 블록의 "PROMPT" 아래 한 줄을 통째로 복사해 이미지 생성 AI(Midjourney, DALL·E, Gemini, Firefly 등)에 붙여 넣으세요.
+· 생성한 이미지는 index.html 과 같은 위치의 images/ 폴더에 아래 "저장 파일명"으로 저장하면 페이지에 자동 표시됩니다.
+· Midjourney 사용 시 프롬프트 끝의 --ar 비율 옵션을 그대로 쓰고, 다른 도구에서는 해당 옵션을 지워도 됩니다.
+· 공통 톤: 파스텔 민트·피치·라일락·스카이블루, 아이보리 배경, 심플·미니멀, 부드러운 자연광
+
+
+--------------------------------------------------
+[1] 메인 히어로 이미지
+저장 파일명: images/hero.jpg  (권장 비율 4:4.2 / 약 1200x1260px)
+--------------------------------------------------
+PROMPT:
+A warm, minimal lifestyle photograph of a friendly Korean counselor in her 40s having a relaxed one-on-one consultation with a middle-aged Korean couple at a light wooden table, bright airy room with ivory walls, soft pastel mint and peach accents, a small green plant and a notebook on the table, gentle natural window light, calm and trustworthy mood, soft focus background, plenty of negative space, editorial photography, pastel color grading --ar 20:21 --style raw
+
+
+--------------------------------------------------
+[2] 서비스 카드 — 건강
+저장 파일명: images/service-health.jpg  (권장 비율 1:1 / 800x800px)
+--------------------------------------------------
+PROMPT:
+Minimal pastel still life illustrating health care: a stethoscope, a glass of water, fresh green apple and a small potted plant arranged on a soft pastel mint background, clean composition with lots of empty space, soft diffused shadows, gentle natural light, calm and fresh mood, simple modern product photography, pastel mint and ivory color palette --ar 1:1
+
+
+--------------------------------------------------
+[3] 서비스 카드 — 재무
+저장 파일명: images/service-finance.jpg  (권장 비율 1:1 / 800x800px)
+--------------------------------------------------
+PROMPT:
+Minimal pastel still life illustrating personal finance planning: a small ceramic piggy bank, a neat stack of coins, a simple calculator and a paper notebook with a pen on a soft pastel peach background, clean composition with lots of empty space, soft diffused shadows, gentle natural light, reassuring and organized mood, simple modern product photography, pastel peach and ivory color palette --ar 1:1
+
+
+--------------------------------------------------
+[4] 서비스 카드 — 가족  ★ 다른 서비스 이미지와 톤을 맞춘 개정판
+저장 파일명: images/service-family.jpg  (비율 4:3 / 1448x1086px — 다른 카드와 동일)
+--------------------------------------------------
+PROMPT:
+Warm, airy lifestyle photograph of a happy three-generation Korean family — a grandmother in her 70s, a couple in their late 30s and a 6-year-old daughter — sitting close together on a light beige sofa, the child leaning on the grandmother while everyone laughs softly, bright minimal living room with ivory walls, sheer white curtains and a small potted plant, soft pastel lilac cushions and knitwear accents, gentle golden morning sunlight streaming through the window, shallow depth of field, calm and affectionate mood, generous negative space on the left, editorial photography with soft pastel color grading, same style as a sunlit Korean counseling lifestyle series --ar 4:3 --style raw
+
+
+--------------------------------------------------
+[5] 서비스 카드 — 은퇴
+저장 파일명: images/service-retire.jpg  (권장 비율 1:1 / 800x800px)
+--------------------------------------------------
+PROMPT:
+Serene minimal photograph of a smiling Korean senior couple in their 60s walking together along a quiet park path in early spring, soft pastel sky blue sky, light green trees, gentle morning sunlight, relaxed and hopeful mood, plenty of negative space, simple composition, editorial lifestyle photography, pastel sky blue and ivory color grading --ar 1:1
+
+
+--------------------------------------------------
+[6] 상담 신청 섹션 이미지
+저장 파일명: images/apply.jpg  (권장 비율 4:3 / 1200x900px)
+--------------------------------------------------
+PROMPT:
+Minimal cozy consultation corner: two comfortable armchairs facing each other beside a small round table with two cups of tea and a potted plant, bright room with ivory walls and soft pastel mint cushions, warm natural light through sheer curtains, welcoming and calm atmosphere, no people, clean and uncluttered, interior photography, pastel color palette --ar 4:3
+
+
+--------------------------------------------------
+[선택] 로고 심볼 (현재는 하트 아이콘이 SVG로 들어가 있음)
+저장 파일명: images/logo.png  (1:1 / 512x512px, 투명 배경 권장)
+--------------------------------------------------
+PROMPT:
+Simple minimal logo symbol for a life care consulting brand, a soft rounded heart shape gently combined with a leaf, flat vector style, single pastel mint green color on a plain white background, clean geometric lines, friendly and trustworthy, no text --ar 1:1
+
+
+--------------------------------------------------
+[한국어 프롬프트 버전] — 한국어를 잘 이해하는 도구용
+--------------------------------------------------
+[1] hero.jpg
+밝고 아늑한 아이보리 톤 상담실에서 40대 한국인 여성 상담사가 중년 한국인 부부와 원목 테이블에 앉아 편안하게 1:1 상담하는 모습, 파스텔 민트와 피치 포인트, 작은 화분과 노트, 창문으로 들어오는 부드러운 자연광, 따뜻하고 신뢰감 있는 분위기, 여백이 많은 미니멀한 구도, 에디토리얼 사진, 파스텔 색감
+
+[2] service-health.jpg
+파스텔 민트 배경 위에 청진기, 물 한 잔, 초록 사과, 작은 화분을 배치한 미니멀 정물 사진, 넓은 여백, 부드러운 그림자, 자연광, 상쾌하고 차분한 분위기, 정사각형
+
+[3] service-finance.jpg
+파스텔 피치 배경 위에 작은 도자기 돼지 저금통, 가지런히 쌓인 동전, 계산기, 노트와 펜을 배치한 미니멀 정물 사진, 넓은 여백, 부드러운 그림자, 자연광, 안정적이고 정돈된 분위기, 정사각형
+
+[4] service-family.jpg  ★ 개정판
+밝고 아늑한 아이보리 톤 거실의 연베이지 소파에 3대 한국인 가족(70대 할머니, 30대 후반 부부, 6살 딸)이 가까이 붙어 앉아 은은하게 웃고 있는 모습, 아이는 할머니에게 기대어 있음, 얇은 흰 커튼과 작은 화분, 파스텔 라일락 쿠션과 니트 포인트, 창으로 들어오는 부드러운 금빛 아침 햇살, 얕은 심도, 다정하고 평온한 분위기, 왼쪽에 넉넉한 여백, 파스텔 색감의 에디토리얼 라이프스타일 사진, 4:3 가로 비율
+
+[5] service-retire.jpg
+이른 봄 한적한 공원 산책로를 함께 걷는 미소 짓는 60대 한국인 부부, 파스텔 하늘색 하늘과 연두빛 나무, 부드러운 아침 햇살, 여유롭고 희망찬 분위기, 넓은 여백, 라이프스타일 사진, 정사각형
+
+[6] apply.jpg
+마주 보는 편안한 안락의자 두 개와 찻잔 두 개, 화분이 놓인 작은 원형 테이블이 있는 미니멀한 상담 공간, 아이보리 벽과 파스텔 민트 쿠션, 얇은 커튼 사이로 들어오는 따뜻한 자연광, 사람 없음, 환영하는 차분한 분위기, 인테리어 사진, 4:3 비율

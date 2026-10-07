@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABC라이프케어 | 종합 라이프케어 상담</title>
+  <meta name="description" content="건강 · 재무 · 가족 · 은퇴까지, 생애 전반의 고민을 전문가와 함께 상담하세요." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================================
+       디자인 토큰 — 색상·폰트·모서리를 여기서 한 번에 수정하세요
+       ========================================================= */
+    :root {
+      --bg: #fdfbf8;            /* 페이지 배경 (따뜻한 아이보리) */
+      --surface: #ffffff;       /* 카드 배경 */
+      --text: #3a3f47;          /* 본문 텍스트 */
+      --text-soft: #7a808a;     /* 보조 텍스트 */
+      --line: #ece8e2;          /* 구분선 */
+
+      --primary: #8fb8a8;       /* 메인 포인트 (파스텔 민트) */
+      --primary-dark: #5f927e;  /* 버튼 hover / 강조 텍스트 */
+
+      --pastel-mint: #e3f1ea;   /* 건강 */
+      --pastel-peach: #fde8dc;  /* 재무 */
+      --pastel-lilac: #ebe5f6;  /* 가족 */
+      --pastel-sky: #e1eef8;    /* 은퇴 */
+
+      --error: #d9777a;
+      --radius: 18px;
+      --font: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    section { padding: 100px 0; }
+    .eyebrow {
+      display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .08em;
+      color: var(--primary-dark); margin-bottom: 12px;
+    }
+    .section-title { font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; line-height: 1.35; margin-bottom: 14px; }
+    .section-desc { color: var(--text-soft); max-width: 560px; }
+    .section-head { text-align: center; margin-bottom: 56px; }
+    .section-head .section-desc { margin: 0 auto; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 28px; border-radius: 999px; border: none; cursor: pointer;
+      font: 700 15px var(--font); transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 6px 18px rgba(143,184,168,.35); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary-dark); }
+
+    /* 이미지 자리 — images/ 폴더에 파일이 없으면 파스텔 그라데이션이 보입니다 */
+    .img-slot {
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--pastel-mint), var(--pastel-lilac) 60%, var(--pastel-peach));
+    }
+    .img-slot img { width: 100%; height: 100%; object-fit: cover; }
+    .img-slot.missing img { display: none; }
+    .img-slot.missing::after {
+      content: attr(data-label); position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px;
+      font-size: 13px; color: var(--text-soft);
+    }
+
+    /* ---------- 내비게이션 ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(253,251,248,.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent; transition: border-color .2s;
+    }
+    .nav.scrolled { border-bottom-color: var(--line); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 11px; background: var(--primary);
+      display: grid; place-items: center;
+    }
+    .logo-mark svg { width: 20px; height: 20px; }
+    .nav-menu { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-menu a { font-size: 15px; font-weight: 500; color: var(--text-soft); transition: color .2s; }
+    .nav-menu a:hover { color: var(--primary-dark); }
+    .nav-cta { padding: 10px 22px; font-size: 14px; }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: .25s; }
+
+    /* ---------- 히어로 ---------- */
+    .hero { padding: 72px 0 100px; }
+    .hero-inner { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+    .hero-badge {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      background: var(--pastel-mint); color: var(--primary-dark); font-size: 13px; font-weight: 700; margin-bottom: 22px;
+    }
+    .hero h1 { font-size: clamp(32px, 4.6vw, 50px); line-height: 1.3; font-weight: 700; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--primary-dark); }
+    .hero p { font-size: 17px; color: var(--text-soft); margin-bottom: 36px; max-width: 460px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 36px; margin-top: 48px; flex-wrap: wrap; }
+    .hero-stats strong { display: block; font-size: 24px; color: var(--text); }
+    .hero-stats span { font-size: 13px; color: var(--text-soft); }
+    .hero-visual { aspect-ratio: 4 / 4.2; }
+    .hero-visual img { object-position: center 35%; }
+
+    /* ---------- 서비스 ---------- */
+    .services { background: var(--surface); }
+    .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .service-card {
+      border-radius: var(--radius); padding: 0 0 28px; background: var(--bg);
+      overflow: hidden; transition: transform .25s, box-shadow .25s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(58,63,71,.07); }
+    .service-card .img-slot { aspect-ratio: 4 / 3; border-radius: 0; }
+    .service-card .body { padding: 22px 24px 0; }
+    .service-tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
+    .service-card h3 { font-size: 19px; margin-bottom: 8px; }
+    .service-card p { font-size: 14px; color: var(--text-soft); }
+    .t-health { background: var(--pastel-mint); }
+    .t-finance { background: var(--pastel-peach); }
+    .t-family { background: var(--pastel-lilac); }
+    .t-retire { background: var(--pastel-sky); }
+
+    /* ---------- 진행 방식 ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; }
+    .step {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 36px 30px; position: relative;
+    }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      font-weight: 700; color: var(--primary-dark); background: var(--pastel-mint); margin-bottom: 20px;
+    }
+    .step:nth-child(2) .step-num { background: var(--pastel-lilac); color: #7d6aa8; }
+    .step:nth-child(3) .step-num { background: var(--pastel-peach); color: #c27b55; }
+    .step h3 { font-size: 20px; margin-bottom: 8px; }
+    .step p { color: var(--text-soft); font-size: 15px; }
+    .step:not(:last-child)::after {
+      content: "→"; position: absolute; right: -19px; top: 50%; transform: translateY(-50%);
+      color: var(--primary); font-size: 20px; z-index: 1;
+    }
+
+    /* ---------- 후기 ---------- */
+    .reviews { background: var(--surface); }
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .review {
+      background: var(--bg); border-radius: var(--radius); padding: 30px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .stars { color: #f2c37a; letter-spacing: 2px; font-size: 15px; }
+    .review blockquote { font-size: 15px; flex: 1; }
+    .reviewer { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+    .reviewer .avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+    .reviewer small { display: block; color: var(--text-soft); font-size: 12px; }
+
+    /* ---------- 상담 신청 ---------- */
+    .apply-wrap {
+      display: grid; grid-template-columns: .85fr 1.15fr;
+      background: var(--surface); border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(58,63,71,.06);
+    }
+    .apply-side { background: var(--pastel-mint); padding: 48px 40px; display: flex; flex-direction: column; gap: 24px; }
+    .apply-side .img-slot { aspect-ratio: 4 / 3; margin-top: auto; }
+    .apply-side ul { list-style: none; display: grid; gap: 10px; font-size: 15px; }
+    .apply-side li::before { content: "✓"; color: var(--primary-dark); font-weight: 700; margin-right: 10px; }
+    .apply-form-area { padding: 48px 44px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+    .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label, .field .label { font-size: 14px; font-weight: 500; }
+    .req { color: var(--error); margin-left: 2px; }
+    .field input[type="text"], .field input[type="tel"], .field select, .field textarea {
+      width: 100%; padding: 13px 15px; border-radius: 12px; border: 1.5px solid var(--line);
+      background-color: var(--bg); font: 15px var(--font); color: var(--text); transition: border-color .2s, background-color .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a808a' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+    }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--primary); background-color: #fff; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .radio-group { display: flex; gap: 8px; }
+    .radio-group label {
+      flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; border: 1.5px solid var(--line);
+      background: var(--bg); cursor: pointer; font-size: 15px; font-weight: 400; transition: .2s; position: relative;
+    }
+    .radio-group input { position: absolute; opacity: 0; pointer-events: none; }
+    .radio-group input:checked + span { color: var(--primary-dark); font-weight: 700; }
+    .radio-group label:has(input:checked) { border-color: var(--primary); background: var(--pastel-mint); }
+    .radio-group label:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    .consent { background: var(--bg); border-radius: 12px; padding: 16px 18px; font-size: 13px; color: var(--text-soft); }
+    .consent-check { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text); cursor: pointer; font-weight: 500; }
+    .consent-check input { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--primary-dark); }
+    .consent details { margin-top: 8px; }
+    .consent summary { cursor: pointer; }
+    .consent details p { margin-top: 6px; line-height: 1.6; }
+
+    .error-msg { font-size: 12px; color: var(--error); display: none; }
+    .field.invalid .error-msg { display: block; }
+    .field.invalid input, .field.invalid select, .field.invalid textarea,
+    .field.invalid .radio-group label, .field.invalid .consent { border-color: var(--error); }
+    .field.invalid .consent { border: 1.5px solid var(--error); }
+
+    .submit-btn { width: 100%; margin-top: 24px; padding: 16px; font-size: 16px; }
+
+    .success { display: none; text-align: center; padding: 60px 10px; animation: fadeUp .5s ease; outline: none; }
+    .success.show { display: block; }
+    .success-icon {
+      width: 76px; height: 76px; border-radius: 50%; background: var(--pastel-mint); margin: 0 auto 24px;
+      display: grid; place-items: center;
+    }
+    .success-icon svg { width: 36px; height: 36px; }
+    .success h3 { font-size: 24px; margin-bottom: 10px; }
+    .success p { color: var(--text-soft); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    /* ---------- 푸터 ---------- */
+    footer { padding: 48px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-soft); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+    footer .logo { font-size: 16px; color: var(--text); }
+
+    /* ---------- 반응형 ---------- */
+    @media (max-width: 960px) {
+      .hero-inner, .apply-wrap { grid-template-columns: 1fr; }
+      .hero-visual { aspect-ratio: 16 / 11; order: -1; }
+      .hero-visual img { object-position: center 38%; }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .review-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -22px; transform: translateX(50%); }
+      .apply-side .img-slot { display: none; }
+    }
+    @media (max-width: 760px) {
+      section { padding: 72px 0; }
+      .hero { padding: 32px 0 72px; }
+      .nav-toggle { display: block; }
+      .nav-menu {
+        position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0; align-items: stretch;
+        background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 20px 20px;
+        display: none;
+      }
+      .nav-menu.open { display: flex; }
+      .nav-menu li a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line); }
+      .nav-menu li:last-child a { border: none; color: var(--primary-dark); font-weight: 700; }
+      .nav-cta { display: none; }
+      .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; }
+      .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .apply-side, .apply-form-area { padding: 32px 22px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .container { padding: 0 16px; }
+      .service-grid { grid-template-columns: 1fr; }
+      .hero-actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 상단 내비게이션 ===== -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="logo" aria-label="ABC라이프케어 홈">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>
+          </svg>
+        </span>
+        <span class="brand-name">ABC라이프케어</span>
+      </a>
+      <nav aria-label="주 메뉴">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#services">서비스</a></li>
+          <li><a href="#process">진행 방식</a></li>
+          <li><a href="#reviews">후기</a></li>
+          <li><a href="#apply">상담 신청</a></li>
+        </ul>
+      </nav>
+      <a href="#apply" class="btn btn-primary nav-cta">상담 신청하기</a>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===== 히어로 ===== -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="hero-badge">종합 라이프케어 상담</span>
+          <h1>인생의 모든 고민,<br /><em>한 곳에서</em> 함께 풀어요</h1>
+          <p>건강 · 재무 · 가족 · 은퇴까지. 분야별 전문가가 나의 상황에 꼭 맞는 해답을 함께 찾아 드립니다.</p>
+          <div class="hero-actions">
+            <a href="#apply" class="btn btn-primary">무료 상담 신청하기</a>
+            <a href="#services" class="btn btn-ghost">서비스 둘러보기</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>12,000+</strong><span>누적 상담 건수</span></div>
+            <div><strong>98%</strong><span>상담 만족도</span></div>
+            <div><strong>24시간</strong><span>내 전문가 배정</span></div>
+          </div>
+        </div>
+        <div class="img-slot hero-visual" data-label="images/hero.jpg">
+          <img src="images/hero.jpg" width="1122" height="1402" fetchpriority="high"
+               alt="햇살이 드는 밝은 상담실에서 상담사가 중년 부부와 원형 테이블에 둘러앉아 웃으며 대화하는 모습" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 서비스 ===== -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">SERVICES</span>
+          <h2 class="section-title">생애 전반의 고민을 함께합니다</h2>
+          <p class="section-desc">한 가지 고민은 다른 고민과 연결되어 있어요. 분야를 넘나드는 통합 상담으로 더 나은 답을 찾아드립니다.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="img-slot t-health" data-label="images/service-health.jpg"><img src="images/service-health.jpg" width="1448" height="1086" loading="lazy" alt="연한 민트색 바닥 위에 놓인 레몬 물 한 잔, 청포도·블루베리·사과를 담은 그릇, 말아 둔 요가 매트와 수건" /></div>
+            <div class="body">
+              <span class="service-tag t-health">건강</span>
+              <h3>건강 상담</h3>
+              <p>생활 습관, 만성 질환 관리, 검진 결과 해석까지 건강한 일상을 설계해요.</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <div class="img-slot t-finance" data-label="images/service-finance.jpg"><img src="images/service-finance.jpg" width="1448" height="1086" loading="lazy" alt="파스텔 옐로 책상 위의 흰 돼지 저금통, 쌓아 둔 동전, 계산기와 펜을 올린 스프링 노트" /></div>
+            <div class="body">
+              <span class="service-tag t-finance">재무</span>
+              <h3>재무 상담</h3>
+              <p>지출 관리, 저축·보험 점검, 자산 계획까지 든든한 경제 기반을 만들어요.</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <div class="img-slot t-family" data-label="images/service-family.jpg"><img src="images/service-family.jpg" width="1448" height="1086" loading="lazy" alt="햇살 드는 밝은 거실 소파에 할머니, 부부, 어린 딸이 나란히 기대앉아 환하게 웃고 있는 3대 가족" /></div>
+            <div class="body">
+              <span class="service-tag t-family">가족</span>
+              <h3>가족 상담</h3>
+              <p>부부·자녀·부모 관계, 돌봄과 양육 고민을 따뜻하게 함께 나눠요.</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <div class="img-slot t-retire" data-label="images/service-retire.jpg"><img src="images/service-retire.jpg" width="1448" height="1086" loading="lazy" alt="노을 지는 호숫가 산책로를 나란히 걷는 노부부의 뒷모습" /></div>
+            <div class="body">
+              <span class="service-tag t-retire">은퇴</span>
+              <h3>은퇴 상담</h3>
+              <p>연금, 은퇴 후 생활비, 제2의 커리어와 여가까지 미리 준비해요.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 진행 방식 ===== -->
+    <section id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">PROCESS</span>
+          <h2 class="section-title">간단한 3단계로 시작하세요</h2>
+          <p class="section-desc">복잡한 절차 없이, 신청만 하시면 나머지는 저희가 준비합니다.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>상담 신청</h3>
+            <p>간단한 정보와 고민 내용을 남겨 주세요. 1분이면 충분합니다.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>전문가 배정</h3>
+            <p>고민 분야와 상황에 가장 잘 맞는 전문가를 24시간 내 배정해 드려요.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>맞춤 상담</h3>
+            <p>전화·화상·방문 중 편한 방식으로 1:1 맞춤 상담을 진행합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 후기 ===== -->
+    <section class="reviews" id="reviews">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">REVIEWS</span>
+          <h2 class="section-title">먼저 경험한 분들의 이야기</h2>
+        </div>
+        <div class="review-grid">
+          <figure class="review">
+            <div class="stars" aria-label="별점 5점">★★★★★</div>
+            <blockquote>은퇴를 앞두고 막막했는데, 연금과 건강 관리를 한 번에 정리할 수 있어서 마음이 한결 가벼워졌어요.</blockquote>
+            <figcaption class="reviewer">
+              <span class="avatar t-retire">김</span>
+              <div>김○○ 님<small>50대 · 은퇴 상담</small></div>
+            </figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="별점 5점">★★★★★</div>
+            <blockquote>맞벌이 육아와 가계 관리 고민을 함께 이야기하니 우리 가족에게 맞는 현실적인 방법을 찾게 됐습니다.</blockquote>
+            <figcaption class="reviewer">
+              <span class="avatar t-family">이</span>
+              <div>이○○ 님<small>30대 · 가족·재무 상담</small></div>
+            </figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="별점 5점">★★★★★</div>
+            <blockquote>검진 결과를 쉽게 설명해 주시고 생활 습관 계획까지 세워 주셔서 꾸준히 실천하고 있어요.</blockquote>
+            <figcaption class="reviewer">
+              <span class="avatar t-health">박</span>
+              <div>박○○ 님<small>40대 · 건강 상담</small></div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 상담 신청 ===== -->
+    <section id="apply">
+      <div class="container">
+        <div class="apply-wrap">
+          <aside class="apply-side">
+            <div>
+              <span class="eyebrow">APPLY</span>
+              <h2 class="section-title">지금 무료 상담을<br />신청하세요</h2>
+              <p class="section-desc">작성해 주신 내용을 바탕으로 가장 알맞은 전문가가 연락드립니다.</p>
+            </div>
+            <ul>
+              <li>첫 상담 무료</li>
+              <li>24시간 내 전문가 배정</li>
+              <li>상담 내용 비밀 보장</li>
+            </ul>
+            <div class="img-slot" data-label="images/apply.jpg"><img src="images/apply.jpg" width="1448" height="1086" loading="lazy" alt="햇살 드는 원목 테이블에서 찻잔을 앞에 두고 한 사람이 노트에 메모하며 상담하는 모습" /></div>
+          </aside>
+
+          <div class="apply-form-area">
+            <form id="applyForm" novalidate>
+              <div class="form-grid">
+                <div class="field" data-field="name">
+                  <label for="name">이름<span class="req">*</span></label>
+                  <input type="text" id="name" name="name" placeholder="홍길동" autocomplete="name" maxlength="20" />
+                  <span class="error-msg">이름을 2자 이상 입력해 주세요.</span>
+                </div>
+                <div class="field" data-field="phone">
+                  <label for="phone">연락처<span class="req">*</span></label>
+                  <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" autocomplete="tel" inputmode="numeric" maxlength="13" />
+                  <span class="error-msg">올바른 휴대폰 번호를 입력해 주세요.</span>
+                </div>
+
+                <div class="field" data-field="gender">
+                  <span class="label" id="genderLabel">성별<span class="req">*</span></span>
+                  <div class="radio-group" role="radiogroup" aria-labelledby="genderLabel">
+                    <label><input type="radio" name="gender" value="남성" /><span>남성</span></label>
+                    <label><input type="radio" name="gender" value="여성" /><span>여성</span></label>
+                  </div>
+                  <span class="error-msg">성별을 선택해 주세요.</span>
+                </div>
+                <div class="field" data-field="birth">
+                  <span class="label" id="birthLabel">출생년월<span class="req">*</span></span>
+                  <div class="row-2" role="group" aria-labelledby="birthLabel">
+                    <select id="birthYear" name="birthYear" aria-label="출생 연도"><option value="">연도</option></select>
+                    <select id="birthMonth" name="birthMonth" aria-label="출생 월"><option value="">월</option></select>
+                  </div>
+                  <span class="error-msg">출생 연도와 월을 선택해 주세요.</span>
+                </div>
+
+                <div class="field" data-field="region">
+                  <label for="region">거주지 (시·도)<span class="req">*</span></label>
+                  <select id="region" name="region">
+                    <option value="">시·도 선택</option>
+                    <option>서울특별시</option>
+                    <option>부산광역시</option>
+                    <option>대구광역시</option>
+                    <option>인천광역시</option>
+                    <option>광주광역시</option>
+                    <option>대전광역시</option>
+                    <option>울산광역시</option>
+                    <option>세종특별자치시</option>
+                    <option>경기도</option>
+                    <option>강원특별자치도</option>
+                    <option>충청북도</option>
+                    <option>충청남도</option>
+                    <option>전북특별자치도</option>
+                    <option>전라남도</option>
+                    <option>경상북도</option>
+                    <option>경상남도</option>
+                    <option>제주특별자치도</option>
+                    <option>해외</option>
+                  </select>
+                  <span class="error-msg">거주지를 선택해 주세요.</span>
+                </div>
+                <div class="field" data-field="category">
+                  <label for="category">상담 분야<span class="req">*</span></label>
+                  <select id="category" name="category">
+                    <option value="">분야 선택</option>
+                    <option>건강</option>
+                    <option>재무</option>
+                    <option>가족</option>
+                    <option>은퇴</option>
+                    <option>복합 / 기타</option>
+                  </select>
+                  <span class="error-msg">상담 분야를 선택해 주세요.</span>
+                </div>
+
+                <div class="field full" data-field="message">
+                  <label for="message">문의 내용<span class="req">*</span></label>
+                  <textarea id="message" name="message" placeholder="현재 고민이나 상담받고 싶은 내용을 자유롭게 적어 주세요. (10자 이상)" maxlength="1000"></textarea>
+                  <span class="error-msg">문의 내용을 10자 이상 입력해 주세요.</span>
+                </div>
+
+                <div class="field full" data-field="consent">
+                  <div class="consent">
+                    <label class="consent-check">
+                      <input type="checkbox" id="consent" name="consent" />
+                      [필수] 개인정보 수집 및 이용에 동의합니다.
+                    </label>
+                    <details>
+                      <summary>내용 보기</summary>
+                      <p>
+                        · 수집 항목: 이름, 연락처, 성별, 출생년월, 거주지, 상담 분야, 문의 내용<br />
+                        · 수집 목적: 상담 신청 접수, 전문가 배정 및 상담 진행 안내<br />
+                        · 보유 기간: 상담 종료 후 1년 (관계 법령에 따라 보관이 필요한 경우 해당 기간)<br />
+                        · 동의를 거부할 권리가 있으나, 거부 시 상담 신청이 제한됩니다.
+                      </p>
+                    </details>
+                  </div>
+                  <span class="error-msg">개인정보 수집 및 이용에 동의해 주세요.</span>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary submit-btn">상담 신청하기</button>
+            </form>
+
+            <div class="success" id="successBox" role="status" aria-live="polite" tabindex="-1">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#5f927e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              </div>
+              <h3>신청이 접수되었습니다</h3>
+              <p><span id="successName"></span>소중한 고민을 남겨 주셔서 감사합니다.<br />24시간 내에 담당 전문가가 연락드리겠습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="#top" class="logo"><span class="brand-name">ABC라이프케어</span></a>
+      <div>고객센터 1600-0000 · 평일 09:00–18:00</div>
+      <div>© 2026 ABC라이프케어. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // 이미지 파일이 없으면 파스텔 플레이스홀더 표시
+    document.querySelectorAll('.img-slot img').forEach(img => {
+      const markMissing = () => img.parentElement.classList.add('missing');
+      if (img.complete && img.naturalWidth === 0) markMissing();
+      img.addEventListener('error', markMissing);
+      img.addEventListener('load', () => img.parentElement.classList.remove('missing'));
+    });
+
+    // 내비게이션: 스크롤 시 구분선, 모바일 메뉴 토글
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 8));
+    const setMenu = open => {
+      navMenu.classList.toggle('open', open);
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    };
+    navToggle.addEventListener('click', () => setMenu(!navMenu.classList.contains('open')));
+    navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+    // 출생년월 옵션 생성
+    const form = document.getElementById('applyForm');
+    const thisYear = new Date().getFullYear();
+    for (let y = thisYear - 14; y >= 1930; y--) form.birthYear.add(new Option(y + '년', y));
+    for (let m = 1; m <= 12; m++) form.birthMonth.add(new Option(m + '월', m));
+
+    // 연락처 자동 하이픈
+    form.phone.addEventListener('input', () => {
+      const d = form.phone.value.replace(/\D/g, '').slice(0, 11);
+      form.phone.value = d.length < 4 ? d
+        : d.length < 8 ? `${d.slice(0, 3)}-${d.slice(3)}`
+        : d.length < 11 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}`
+        : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`;
+    });
+
+    // 입력 검증 규칙
+    const rules = {
+      name: f => /^[가-힣a-zA-Z\s]{2,20}$/.test(f.name.value.trim()),
+      phone: f => /^01[016789]-\d{3,4}-\d{4}$/.test(f.phone.value.trim()),
+      gender: f => !!f.querySelector('input[name="gender"]:checked'),
+      birth: f => f.birthYear.value !== '' && f.birthMonth.value !== '',
+      region: f => f.region.value !== '',
+      category: f => f.category.value !== '',
+      message: f => f.message.value.trim().length >= 10,
+      consent: f => f.consent.checked,
+    };
+    const fieldOf = key => form.querySelector(`[data-field="${key}"]`);
+    const validate = key => {
+      const ok = rules[key](form);
+      fieldOf(key).classList.toggle('invalid', !ok);
+      return ok;
+    };
+
+    // 오류 표시된 항목은 고치는 즉시 오류 해제
+    Object.keys(rules).forEach(key => {
+      ['input', 'change'].forEach(ev =>
+        fieldOf(key).addEventListener(ev, () => fieldOf(key).classList.contains('invalid') && validate(key)));
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const invalid = Object.keys(rules).filter(key => !validate(key));
+      if (invalid.length) {
+        const first = fieldOf(invalid[0]);
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        first.querySelector('input, select, textarea')?.focus({ preventScroll: true });
+        return;
+      }
+      // 실제 서버 전송이 필요하면 여기에서 fetch()로 new FormData(form)을 보내세요.
+      const success = document.getElementById('successBox');
+      document.getElementById('successName').textContent = `${form.name.value.trim()} 님, `;
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.focus();
+    });
+  </script>
+</body>
+</html>
